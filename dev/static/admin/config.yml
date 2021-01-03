@@ -1,0 +1,198 @@
+# site_url: http://localhost:3000
+logo_url: /icon.png
+# publish_mode: editorial_workflow
+backend:
+  name: git-gateway
+  branch: main
+local_backend:
+  url: http://localhost:8081/api/v1
+media_folder: static/img
+public_folder: /img
+collections:
+  - label: Settings
+    name: settings
+    files:
+      - label: Site Settings
+        name: settings
+        file: content/sitedata.json
+        format: json
+        editor:
+          preview: false
+        media_folder: '../static'
+        public_folder: '/'
+        fields:
+          - label: Site Name
+            name: name
+            widget: string
+            hint: This is used for the site title
+          - label: Site Description
+            name: description
+            widget: string
+            hint: This is used as descriptive text for links that link to this site
+          - label: Site Email
+            name: siteEmail
+            widget: string
+            required: false
+
+          # - label: Site Twitter Handle
+          #   name: twitterHandle
+          #   editor:
+          #     preview: false
+          #   widget: string
+          #   required: false
+          # - label: Site Tumblr Handle
+          # name: tumblrHandle
+          # widget: string
+          # required: false
+
+          - label: Tags/Keywords
+            name: tags
+            widget: list
+            allow_add: true
+            default:
+              - nuxt
+
+          - label: Social Networks
+            name: networks
+            widget: list
+            required: false
+            summary: '{{fields.name}}'
+            fields:
+              - label: Name
+                name: name
+                widget: string
+                required: true
+              - label: Url
+                name: url
+                widget: string
+                required: true
+              - label: Icon
+                name: icon
+                widget: image
+                required: false
+              - label: Handle
+                name: handle
+                widget: string
+                required: true
+          - label: Favicon
+            name: favicon
+            widget: file
+            allow_multiple: false
+            required: true
+            default: /favicon.ico
+
+          - label: Site Language
+            name: lang
+            widget: string
+            pattern:
+              - ^[a-z]{2}([-])?([A-Za-z]{2})?$
+              - Must match "xx" or "xx-XX" syntax (ex. "en" or "sv-SE")
+          - label: Enable Merging of Tumblr Posts
+            name: enableTumblrMerge
+            widget: boolean
+            hint: enable merging of Tumblr posts(Tumblr handle required)
+            required: false
+            default: false
+
+      - label: Navigation Link Settings
+        name: navigation
+        file: content/navigation.json
+        format: json
+        editor:
+          preview: false
+        fields:
+          - label: Navigation Pages
+            name: pages
+            label_singular: Navigation Page
+            create: false
+            widget: list
+            summary: '{{fields.title}}'
+            hint: 'Drag to sort order shown in navigation, Edit: title, description, show in navigation'
+            fields:
+              - label: Title
+                name: title
+                required: true
+                widget: string
+              - label: Description
+                name: description
+                required: false
+                widget: string
+              - label: Show in Navigation
+                name: showInNav
+                required: true
+                widget: boolean
+                default: true
+              - label: Sort Order
+                name: sortOrder
+                widget: hidden
+                required: false
+                default: null
+
+          - label: Navigation Post Type
+            name: posts
+            label_singular: Post Type
+            create: false
+            widget: list
+            summary: '{{fields.title}}'
+            hint: 'Drag to sort order shown in navigation, Edit: title, description, show in navigation'
+            fields:
+              - label: Title
+                name: title
+                required: true
+                widget: string
+              - label: Description
+                name: description
+                required: false
+                widget: string
+              - label: Show in Navigation
+                name: showInNav
+                required: true
+                widget: boolean
+                default: true
+              - label: Sort Order
+                name: sortOrder
+                widget: hidden
+                required: false
+                default: null
+
+  ######################################
+  # to add
+  #  seo
+  #    default share image
+  # convert @user to links - twitter/instagram/disabled
+  # convert #tags to links - twitter/instagram/disabled
+  ######################################
+
+  # - label: Cms Config
+  #   name: cmsconfig
+  #   file: static/admin/config.yml
+  #   format: yml
+  #   editor:
+  #     preview: false
+  #   fields:
+  #     - label: Site Url
+  #       name: site_url
+  #       widget: string
+  #       hint: This is used for the site domain or url, example http://localhost:3000
+
+  - label: Pages
+    label_singular: Page
+    name: pages
+    folder: content
+    slug: '{{slug}}'
+    create: true
+    fields:
+      - label: Title
+        name: title
+        widget: string
+      - label: Cover Image
+        name: cover
+        widget: image
+        required: false
+        allow_multiple: false
+      - label: Description
+        name: description
+        widget: string
+      - label: Body
+        name: body
+        widget: markdown

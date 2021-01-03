@@ -1,0 +1,53 @@
+{
+  "networks": [
+    {
+      "name": "Facebook",
+      "url": "https://www.facebook.com/Crannog-127889473932778/",
+      "handle": "Crannog-127889473932778",
+      "icon": "",
+      "showInNav": true
+    },
+    {
+      "name": "Instagram",
+      "url": "https://www.instagram.com",
+      "handle": "crannog",
+      "icon": "",
+      "showInNav": false
+    },
+    {
+      "name": "Twitter",
+      "url": "https://twitter.com/crannog",
+      "handle": "crannog",
+      "icon": "",
+      "showInNav": true
+    },
+    {
+      "name": "Tumblr",
+      "url": "",
+      "handle": "crannog",
+      "icon": "",
+      "showInNav": false
+    },
+    {
+      "name": "Email",
+      "url": "super@nuxtjs.org",
+      "handle": "",
+      "icon": "",
+      "showInNav": true
+    }
+  ],
+  "name": "Crannog Music",
+  "lang": "en-US",
+  "favicon": "/favicon.ico",
+  "siteEmail": "super@nuxtjs.org",
+  "tags": [
+    "renaissance",
+    "renaissance fair",
+    "renaissance music",
+    "michigan renaissance",
+    "florida renaissance",
+    "new york renaissance"
+  ],
+  "enableTumblrMerge": false,
+  "description": "Nuxt Supercharged with SEO enhancements, Nuxt Content with NetlifyCms(including local) all in a flat-file system."
+}

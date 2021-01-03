@@ -1,0 +1,51 @@
+{
+  "pages": [
+    {
+      "slug": "about",
+      "title": "About",
+      "description": "",
+      "path": "/about",
+      "type": "page",
+      "showInNav": true,
+      "sortOrder": 0
+    }
+  ],
+  "posts": [
+    {
+      "slug": "blog",
+      "title": "News",
+      "description": "",
+      "path": "/blog",
+      "type": "blog",
+      "showInNav": true,
+      "sortOrder": -1
+    },
+    {
+      "slug": "music",
+      "title": "Music",
+      "description": "",
+      "path": "/music",
+      "type": "music",
+      "showInNav": true,
+      "sortOrder": 1
+    },
+    {
+      "slug": "photos",
+      "title": "Photos",
+      "description": "",
+      "path": "/photos",
+      "type": "photos",
+      "showInNav": true,
+      "sortOrder": 2
+    },
+    {
+      "slug": "videos",
+      "title": "Videos",
+      "description": "",
+      "path": "/videos",
+      "type": "videos",
+      "showInNav": true,
+      "sortOrder": 3
+    }
+  ]
+}

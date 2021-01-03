@@ -1,0 +1,20 @@
+{
+  "dependencies": [
+    "@nuxtjs/svg",
+    "tailwind-hamburgers",
+    "@tailwindcss/typography",
+    "vue2-smooth-scroll"
+  ],
+  "devDependencies": [
+    "@nuxtjs/tailwindcss",
+    "load-json-file",
+    "write-json-file"
+  ],
+  "scripts": {},
+  "mergeNuxtConfig": {
+    "css": [],
+    "plugins": [{ "src": "./plugins/smooth-scroll", "mode": "client" }],
+    "modules": [],
+    "buildModules": ["@nuxtjs/tailwindcss", "@nuxtjs/svg"]
+  }
+}
