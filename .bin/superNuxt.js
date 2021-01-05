@@ -8,6 +8,8 @@ const chalk = require('chalk')
 const execa = require('execa')
 const beautify = require('js-beautify').js
 
+const cssFrameWorks = ['@nuxtjs/tailwindcss', '@nuxtjs/vuetify']
+
 // init
 //  [x] 1: Check for nuxt.config and package.json
 //  [x] 1: backup nuxt.config ??add package??
@@ -124,7 +126,6 @@ const install = async function (path) {
 
 const selectTheme = async (pkgJsonPath, path) => {
   const { dependencies, devDependencies } = require(pkgJsonPath)
-  const cssFrameWorks = ['@nuxtjs/tailwindcss', '@nuxtjs/vuetify']
   const installedCssFrameworks = Object.keys({
     ...dependencies,
     ...devDependencies,
@@ -310,10 +311,16 @@ const installPackages = async (path, pkgJsonPath, options) => {
 const addFolders = async (path, theme) => {
   const globalThemeDir = `${__dirname}/../themes/_global`
   const themeDir = `${__dirname}/../themes/${theme}`
-  const folders = theme !== 'no-theme' ? fs.readdirSync(themeDir) : []
-  const globalFolders = fs.readdirSync(globalThemeDir)
+  const exclude = ['theme.config.json', '.git']
+  const folders =
+    theme !== 'no-theme'
+      ? fs.readdirSync(themeDir).filter((f) => !exclude.includes(f))
+      : []
+  const globalFolders = fs
+    .readdirSync(globalThemeDir)
+    .filter((f) => !exclude.includes(f))
 
-  console.log('Copying global dirs ', globalFolders.join(', '))
+  console.log('Copying global dirs and files ', globalFolders.join(', '))
   await Promise.resolve(
     globalFolders.forEach(async (folder) => {
       // delete folder, then
@@ -330,11 +337,10 @@ const addFolders = async (path, theme) => {
   )
 
   if (theme !== 'no-theme') {
-    console.log('Copying theme dirs ', folders.join(', '))
+    console.log('Copying theme dirs and files ', folders.join(', '))
     await Promise.resolve(
       folders.forEach(async (folder) => {
         // delete folder, then
-        const exclude = ['theme.config.json', '.git']
         if (!exclude.includes(folder)) {
           try {
             await bashCmd(
@@ -386,7 +392,49 @@ const complete = () => {
 }
 
 const createTheme = async () => {
-  console.log('creating theme....')
+  const args = process.argv.slice(3)
+  const pkg = require(`${process.cwd()}/package.json`)
+
+  console.log('Creating theme', args.length ? args[0] : '')
+
+  const name = args.length
+    ? args[0]
+    : await inquirer
+        .prompt([
+          {
+            type: 'input',
+            name: 'name',
+            message: 'Name your theme',
+          },
+        ])
+        .then((answers) => answers.name)
+
+  const cssFramework = Object.keys({
+    ...pkg.dependencies,
+    ...pkg.devDependencies,
+  })
+    .filter((pkg) => cssFrameWorks.includes(pkg))
+    .map((framework) => framework.replace('@nuxtjs/', ''))[0]
+
+  const themePath = `${process.cwd()}/themes/${cssFramework}-${name}`
+  if (!fs.existsSync(`${process.cwd()}/themes`)) {
+    await bashCmd(process.cwd(), `mkdir ${process.cwd()}/themes`)
+  }
+  await bashCmd(process.cwd(), `mkdir ${themePath}`)
+  // [x] get css framework
+  // [x] create dir
+  // copy file and dir list - skip file that are the saem and in _global
+  // get pkgs
+  // get nuxtConfig ['css', 'plugins', 'modules', 'buildModules']
+  // crete theme.config,json
+  const themeConfig = {
+    dependencies: pkg.dependencies,
+    devDependencies: pkg.devDependencies,
+    scripts: pkg.scripts,
+    mergeNuxtConfig: pkg.mergeNuxtConfig,
+  }
+
+  return { success: true, name }
 }
 
 module.exports = { install, createTheme }

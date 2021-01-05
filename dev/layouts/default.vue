@@ -4,7 +4,7 @@
       <Nav />
       <nuxt />
       <!-- <Footer /> -->
-      <footer class="mt-auto text-center bg-gray-900 text-gray-900">
+      <footer class="mt-auto text-center bg-gray-900 text-gray-100">
         <hr class="border-gray-700 py-2" />
         <span class="flex items-center justify-center py-8">
           <h4 class="mr-4 text-xl">Keep in touch..</h4>

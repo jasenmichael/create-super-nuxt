@@ -94,4 +94,14 @@ export default {
       description: description,
     },
   },
+  tailwindcss: {
+    exposeConfig: true
+  },
+  build: {
+    postcss: {
+      plugins: {
+        "postcss-nested": {}
+      }
+    }
+  }
 }

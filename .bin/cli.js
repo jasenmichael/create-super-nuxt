@@ -3,6 +3,7 @@ const fs = require('fs')
 const execa = require('execa')
 const initSuperNuxt = require('./superNuxt').install
 const createSuperNuxtTheme = require('./superNuxt').createTheme
+const chalk = require('chalk')
 
 ;(async () => {
   const { installPath, nuxtExist } = await setup()
@@ -28,12 +29,26 @@ use . for current directory(must be empty)
 if already a nuxt project, will skip installing Nuxt 
 and go straight to installing Super Nuxt
 
--h, --help        print this command line options.
+-h, --help           print this command line options.
+-ct, --create-theme  creates a super-nuxt theme from current project,
 `
   // check if help flag passed
   if (args.includes('--help') | args.includes('-h')) {
     console.log(helpText)
     process.exit()
+  }
+
+  if (args.includes('--create-theme') | args.includes('-ct')) {
+    const themeCreated = await createSuperNuxtTheme(args)
+    if (themeCreated.success) {
+      console.log(
+        chalk.green(`Theme "${themeCreated.name}" created in themes/`)
+      )
+      process.exit()
+    } else {
+      console.log(chalk.red('ERROR creating theme', themeCreated.error))
+      process.exit()
+    }
   }
 
   // no help flag passed, see if path specified is valid
@@ -133,8 +148,4 @@ async function installSuperNuxt(path) {
     console.log('Error installing Super Nuxt', error)
   }
   return
-}
-
-async function createTheme() {
-  await createSuperNuxtTheme()
 }

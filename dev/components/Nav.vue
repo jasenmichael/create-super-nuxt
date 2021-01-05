@@ -4,8 +4,8 @@
       class="transition-all w-screen fixed duration-900 z-50 ease-in-out text-gray-100"
       :class="
         $route.path !== '/' || scrollY >= yTrigger || menu
-          ? 'bg-gray-800 shadow-lg'
-          : 'bg-gray-900 md:py-5'
+          ? 'nav-bar'
+          : 'nav-bar-home'
       "
     >
       <!--  dummy div to prevent dynamic classes from being purged -->
@@ -99,7 +99,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="postcss">
 .brand {
   background-color: white;
   -webkit-background-clip: text;
@@ -107,5 +107,14 @@ export default {
   background-clip: text;
   color: transparent;
   text-shadow: rgba(255, 255, 255, 0.5) 0 3px 2px;
+}
+
+.nav-bar-home {
+  /* @apply bg-gray-900 md\:py-5; */
+  @apply bg-gray-900 py-5;
+}
+
+.nav-bar {
+  @apply bg-gray-800 shadow-lg;
 }
 </style>
