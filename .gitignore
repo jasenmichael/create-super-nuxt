@@ -90,5 +90,4 @@ sw.*
 *.swp
 
 test/
-dev/
-*/node_modules/
+dev/node_modules/
